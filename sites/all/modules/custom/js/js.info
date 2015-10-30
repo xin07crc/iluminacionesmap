@@ -1,0 +1,4 @@
+name = js
+description = Load js to page
+core = 7.x
+package = Own

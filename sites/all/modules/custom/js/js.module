@@ -1,0 +1,6 @@
+<?php
+function js_node_load($nodes, $types) {
+	if ($types[0] == "videos_fotos") {
+		drupal_add_js('sites/all/modules/custom/js/js/js.js');
+	}
+}
