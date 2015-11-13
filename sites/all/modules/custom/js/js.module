@@ -36,7 +36,8 @@ function js_menu() {
  */
 function js_lista_presupuestos($form, &$form_state) {
      dpm('hola');
-//    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
+    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
+    dpm($show_tables2);
 //    $form = array();
 //    // Carga las cabeceras
 //    $form['Nombre'] = array(
