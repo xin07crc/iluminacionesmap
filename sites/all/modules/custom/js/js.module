@@ -3,6 +3,7 @@
  * implemetns hook menu
  */
 function js_menu() {
+    // Menu materiales carga la lista de materiales
 	$items['materiales'] = array(
 	    'title' => 'Materiales',
 	    'description' => 'Distintos elementos de formulario.',
@@ -11,6 +12,7 @@ function js_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_CALLBACK,
 	  );
+        // Carga la lista de presupuestos
 	$items['presupuestos'] = array(
 	    'title' => 'Materiales',
 	    'description' => 'Distintos elementos de formulario.',
@@ -19,6 +21,7 @@ function js_menu() {
 	    'access callback' => TRUE,
 	    'type' => MENU_CALLBACK,
 	  );
+        //Descarga el excel, recive como parametro el nombre del presupuesto
         $items['excel/%'] = array(
 	  'title' => 'Materiales',
 	  'page callback' => 'js_crear_excel',
@@ -28,13 +31,14 @@ function js_menu() {
 	return $items;
 }
 /**
- * 
+ * Carga la lista de presupuestos
  * 
  */
 function js_lista_presupuestos($form, &$form_state) {
      
-    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME")->fetchAll();
+    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
     $form = array();
+    // Carga las cabeceras
     $form['Nombre'] = array(
       '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
        '#type' => 'item',
@@ -53,10 +57,13 @@ function js_lista_presupuestos($form, &$form_state) {
         '#title' => t('Descarga'),
       '#suffix' => '</div></div>', 
     );        
+    // Fin de cabeceras
+    // Reccore el resultado de la consullta
     foreach ($show_tables2 as $p) {
-
+        // Almacena los valaires de los datos
         $Nombre = $p->TABLE_NAME;
         $fecha = $p->CREATE_TIME;
+        // Coge el Nombre real, quita los _
         $Nombreexplode = explode("_", $Nombre);
         $form[$Nombre] = array(
            '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
@@ -70,6 +77,7 @@ function js_lista_presupuestos($form, &$form_state) {
             '#title' => $fecha,
           '#suffix' => '</div>', 
         ); 
+        // Enlace a la descarga del excel
         $form['excel_' . $Nombre] = array(
           '#prefix' => '<div class="wraper-pres-field"><a href="excel/' . $Nombre . '">',
           '#type' => 'item',
@@ -79,33 +87,12 @@ function js_lista_presupuestos($form, &$form_state) {
         );         
     }
     return $form;
-    foreach ($show_tables as $table) {
-        foreach($table as $tab) {
-            $tab_invertida = strrev($tab);
-            $pieces = explode("_", $tab_invertida);
-            $textoenlace = "Presupuesto de ";
-            $select_name = db_query("show tables like 'presupuesto%'")->fetchAll();
-            $nombre = explode("_", $tab);
-            $textoenlace .= $nombre[1] . " ";
-            $fecha = format_date(strrev($pieces[0]), 'custom', 'd/m/Y/');
-            $textoenlace .= $fecha;
-            $rows[] = array('$textoenlace');
-           
-        }
-    }
-   
-
-
-
 }
-
-
-
-
-
 
 /**
  * Implements list_materials
+ * Carga la lista de materiales
+ * Carga los nodos tipo Material
  */
 function js_list_materials($form, &$form_state) {
 	$form = array();
@@ -279,7 +266,7 @@ function js_crear_excel($nombre_tabla_excel) {
   
   foreach ($result as $row) {
       $linea = array();
-      dpm($row);
+
       
       
       
@@ -306,13 +293,13 @@ function js_crear_excel($nombre_tabla_excel) {
         $childen_name = $taxonomy->name;
         $childen_name = str_replace(" ", "_", $childen_name);
         if ($taxonomy->description == $array_children_parent[0] && ($row->id - $taxonomy->description) == 1) {
-            dpm('parent');
+
             array_push($linea, $parent_name);
             array_push($list, $linea);
             $linea = array();
         }
        if (($row->id - $taxonomy->description) == 1) {
-           dpm('child');
+
            array_push($linea, "");
             array_push($linea, $childen_name);
             array_push($list, $linea);
@@ -333,7 +320,7 @@ function js_crear_excel($nombre_tabla_excel) {
   foreach($list as $fields) {
        fputcsv($output, $fields);
   }
-  dpm($list);
+
 
   fclose($output);
 }
