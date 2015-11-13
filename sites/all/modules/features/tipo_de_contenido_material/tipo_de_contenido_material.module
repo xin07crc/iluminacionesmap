@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Tipo de contenido material feature.
+ */
+
+include_once 'tipo_de_contenido_material.features.inc';
