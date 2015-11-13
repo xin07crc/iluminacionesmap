@@ -35,58 +35,58 @@ function js_menu() {
  * 
  */
 function js_lista_presupuestos($form, &$form_state) {
-     
-    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
-    $form = array();
-    // Carga las cabeceras
-    $form['Nombre'] = array(
-      '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
-       '#type' => 'item',
-        '#title' => t('Nombre'),
-       '#suffix' => '</div>', 
-    );    
-    $form['Fecha'] = array(
-      '#prefix' => '<div class="wraper-pres-field">',
-       '#type' => 'item',
-        '#title' => t('Fecha'),
-      '#suffix' => '</div>', 
-    );    
-    $form['Descarga'] = array(
-      '#prefix' => '<div class="wraper-pres-field">',
-       '#type' => 'item',
-        '#title' => t('Descarga'),
-      '#suffix' => '</div></div>', 
-    );        
-    // Fin de cabeceras
-    // Reccore el resultado de la consullta
-    foreach ($show_tables2 as $p) {
-        // Almacena los valaires de los datos
-        $Nombre = $p->TABLE_NAME;
-        $fecha = $p->CREATE_TIME;
-        // Coge el Nombre real, quita los _
-        $Nombreexplode = explode("_", $Nombre);
-        $form[$Nombre] = array(
-           '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
-            '#type' => 'item',
-            '#title' => $Nombreexplode[1],
-           '#suffix' => '</div>', 
-        );
-        $form[$fecha] = array(
-          '#prefix' => '<div class="wraper-pres-field">',
-            '#type' => 'item',
-            '#title' => $fecha,
-          '#suffix' => '</div>', 
-        ); 
-        // Enlace a la descarga del excel
-        $form['excel_' . $Nombre] = array(
-          '#prefix' => '<div class="wraper-pres-field"><a href="excel/' . $Nombre . '">',
-          '#type' => 'item',
-          '#title' => t('Descargar'),
-          '#value' => t('Descargar'),
-          '#suffix' => '</a></div></div>', 
-        );         
-    }
-    return $form;
+     dpm('hola');
+//    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
+//    $form = array();
+//    // Carga las cabeceras
+//    $form['Nombre'] = array(
+//      '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
+//       '#type' => 'item',
+//        '#title' => t('Nombre'),
+//       '#suffix' => '</div>', 
+//    );    
+//    $form['Fecha'] = array(
+//      '#prefix' => '<div class="wraper-pres-field">',
+//       '#type' => 'item',
+//        '#title' => t('Fecha'),
+//      '#suffix' => '</div>', 
+//    );    
+//    $form['Descarga'] = array(
+//      '#prefix' => '<div class="wraper-pres-field">',
+//       '#type' => 'item',
+//        '#title' => t('Descarga'),
+//      '#suffix' => '</div></div>', 
+//    );        
+//    // Fin de cabeceras
+//    // Reccore el resultado de la consullta
+//    foreach ($show_tables2 as $p) {
+//        // Almacena los valaires de los datos
+//        $Nombre = $p->TABLE_NAME;
+//        $fecha = $p->CREATE_TIME;
+//        // Coge el Nombre real, quita los _
+//        $Nombreexplode = explode("_", $Nombre);
+//        $form[$Nombre] = array(
+//           '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
+//            '#type' => 'item',
+//            '#title' => $Nombreexplode[1],
+//           '#suffix' => '</div>', 
+//        );
+//        $form[$fecha] = array(
+//          '#prefix' => '<div class="wraper-pres-field">',
+//            '#type' => 'item',
+//            '#title' => $fecha,
+//          '#suffix' => '</div>', 
+//        ); 
+//        // Enlace a la descarga del excel
+//        $form['excel_' . $Nombre] = array(
+//          '#prefix' => '<div class="wraper-pres-field"><a href="excel/' . $Nombre . '">',
+//          '#type' => 'item',
+//          '#title' => t('Descargar'),
+//          '#value' => t('Descargar'),
+//          '#suffix' => '</a></div></div>', 
+//        );         
+//    }
+//    return $form;
 }
 
 /**
