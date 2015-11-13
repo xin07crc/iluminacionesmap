@@ -3,6 +3,16 @@ www.devsaran.com
 */
 
 @import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
+/*lista excel*/
+.wraper-pres {
+    width: 100%;
+    clear: left;
+    float: left;
+}
+.wraper-pres-field {
+    width: 33.3%;
+    float: left;
+}
 /*Contacto*/
 #edit-submitted-nombre, .form-item label {
 
@@ -150,7 +160,14 @@ h3.gdl-header-title, .front .pane-title {
   margin-right: 16px;
   margin-top: 4px;
 }
-
+/*MATERIALES*/
+.divcontainerfieldsform .form-type-textfield input {
+    width: 20%;
+}
+.divcontainerfieldsform {
+  width:20%;
+  float: left  
+}
 /*NOSOTROS*/
 .field-name-field-nosotros-texto {
   float:left;
