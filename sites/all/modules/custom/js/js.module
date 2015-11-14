@@ -232,7 +232,7 @@ function js_list_materials_submit($form, &$form_state) {
 		$total = $total + $multi;
 	}
 	js_create_insert_sql_form($form, $form_state, $array_field_nombres);
-        
+        drupal_set_message(t("Presupuesto enviado"), 'status');
 }
 
 function js_create_insert_sql_form($form, $form_state, $array_field_nombres) {
@@ -253,6 +253,7 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres) {
         $sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
         db_query($sql2); 
     }
+    return;
 }
 
 
