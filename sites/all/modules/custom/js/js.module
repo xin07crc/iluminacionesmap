@@ -263,7 +263,7 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres) {
 function js_crear_excel($nombre_tabla_excel) {
 // Set the headers to indicate this is a CSV file.
   header('Content-type: text/csv; charset=UTF-8');
-  header('Content-Disposition: attachment; filename=user_signups.csv');
+  header('Content-Disposition: attachment; filename=' . $nombre_tabla_excel . '.csv');
   header('Pragma: no-cache');
   header('Expires: 0');
 
