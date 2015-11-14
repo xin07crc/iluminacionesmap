@@ -35,59 +35,71 @@ function js_menu() {
  * 
  */
 function js_lista_presupuestos($form, &$form_state) {
-     dpm('hola');
-    $show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
-    dpm($show_tables2);
-//    $form = array();
-//    // Carga las cabeceras
-//    $form['Nombre'] = array(
-//      '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
-//       '#type' => 'item',
-//        '#title' => t('Nombre'),
-//       '#suffix' => '</div>', 
-//    );    
-//    $form['Fecha'] = array(
-//      '#prefix' => '<div class="wraper-pres-field">',
-//       '#type' => 'item',
-//        '#title' => t('Fecha'),
-//      '#suffix' => '</div>', 
-//    );    
-//    $form['Descarga'] = array(
-//      '#prefix' => '<div class="wraper-pres-field">',
-//       '#type' => 'item',
-//        '#title' => t('Descarga'),
-//      '#suffix' => '</div></div>', 
-//    );        
-//    // Fin de cabeceras
-//    // Reccore el resultado de la consullta
-//    foreach ($show_tables2 as $p) {
-//        // Almacena los valaires de los datos
-//        $Nombre = $p->TABLE_NAME;
-//        $fecha = $p->CREATE_TIME;
-//        // Coge el Nombre real, quita los _
-//        $Nombreexplode = explode("_", $Nombre);
-//        $form[$Nombre] = array(
-//           '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
-//            '#type' => 'item',
-//            '#title' => $Nombreexplode[1],
-//           '#suffix' => '</div>', 
-//        );
-//        $form[$fecha] = array(
-//          '#prefix' => '<div class="wraper-pres-field">',
-//            '#type' => 'item',
-//            '#title' => $fecha,
-//          '#suffix' => '</div>', 
-//        ); 
-//        // Enlace a la descarga del excel
-//        $form['excel_' . $Nombre] = array(
-//          '#prefix' => '<div class="wraper-pres-field"><a href="excel/' . $Nombre . '">',
-//          '#type' => 'item',
-//          '#title' => t('Descargar'),
-//          '#value' => t('Descargar'),
-//          '#suffix' => '</a></div></div>', 
-//        );         
-//    }
-//    return $form;
+    //$show_tables2 = db_query("select * from information_schema.tables where table_name like 'presupuesto%' order by CREATE_TIME desc")->fetchAll(); // Consulta lista de tablas en sql de presupuesto
+    $show_tables2 = db_query("select * from aux_presupuesto_tables order by create_time desc")->fetchAll();
+    $form = array();
+    // Carga las cabeceras
+    $form['Nombre'] = array(
+      '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
+       '#type' => 'item',
+        '#title' => t('Nombre'),
+       '#suffix' => '</div>', 
+    );    
+    $form['mail'] = array(
+      '#prefix' => '<div class="wraper-pres-field">',
+       '#type' => 'item',
+        '#title' => t('Correo'),
+      '#suffix' => '</div>', 
+    );      
+    $form['Fecha'] = array(
+      '#prefix' => '<div class="wraper-pres-field">',
+       '#type' => 'item',
+        '#title' => t('Fecha'),
+      '#suffix' => '</div>', 
+    );          
+    $form['Descarga'] = array(
+      '#prefix' => '<div class="wraper-pres-field">',
+       '#type' => 'item',
+        '#title' => t('Descarga'),
+      '#suffix' => '</div></div>', 
+    );        
+    // Fin de cabeceras
+    // Reccore el resultado de la consullta
+    foreach ($show_tables2 as $p) {
+        // Almacena los valaires de los datos
+        $Nombre = $p->nombre;
+        $correo = $p->correo;
+        $fecha = $p->create_time;
+        // Coge el Nombre real, quita los _
+        $Nombreexplode = explode("_", $Nombre);
+        $form[$Nombre] = array(
+           '#prefix' => '<div class="wraper-pres"><div class="wraper-pres-field">',
+            '#type' => 'item',
+            '#title' => $Nombreexplode[1],
+           '#suffix' => '</div>', 
+        );
+        $form[$correo] = array(
+          '#prefix' => '<div class="wraper-pres-field">',
+            '#type' => 'item',
+            '#title' => $correo,
+          '#suffix' => '</div>', 
+        );         
+        $form[$fecha] = array(
+          '#prefix' => '<div class="wraper-pres-field">',
+            '#type' => 'item',
+            '#title' => $fecha,
+          '#suffix' => '</div>', 
+        ); 
+        // Enlace a la descarga del excel
+        $form['excel_' . $Nombre] = array(
+          '#prefix' => '<div class="wraper-pres-field"><a href="excel/' . $Nombre . '">',
+          '#type' => 'item',
+          '#title' => t('Descargar'),
+          '#value' => t('Descargar'),
+          '#suffix' => '</a></div></div>', 
+        );         
+    }
+    return $form;
 }
 
 /**
@@ -226,10 +238,11 @@ function js_list_materials_submit($form, &$form_state) {
 function js_create_insert_sql_form($form, $form_state, $array_field_nombres) {
     $mail = $form_state['input']['mail'];
     $table_name = 'presupuesto_' . $form_state['input']['nombre'] . '_' . $form_state['input']['fecha'] . '';
-    
-   $sql2 = 'create table ' . $table_name . ' (id int(5) primary key, material varchar(30), cantidad int(5), precio int(5), correo varchar(30), taxonomia int(5))';
-   db_query($sql2);
-   $total = 0;
+    $sql = "insert into aux_presupuesto_tables (nombre, correo) values ('$table_name', '$mail')";
+    db_query($sql);
+    $sql2 = 'create table ' . $table_name . ' (id int(5) primary key, material varchar(30), cantidad int(5), precio int(5), taxonomia int(5))';
+    db_query($sql2);
+    $total = 0;
     foreach ($array_field_nombres as $field_nombre) {
     	$field_nombre = str_replace(" ", "_", $field_nombre);
         $field_nombre = str_replace(".", "_", $field_nombre);
@@ -237,8 +250,8 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres) {
 	$cantidad = $form_state['input']['field_cantidad_' . $field_nombre];
         $id = $form_state['input']['field_id_' . $field_nombre];
         $tid = $form_state['input']['field_tid_' . $field_nombre];
-        $sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, correo, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, '$mail', $tid)";
-        db_query($sql2);
+        $sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
+        db_query($sql2); 
     }
 }
 
