@@ -372,18 +372,19 @@ function js_list_materials($form, &$form_state) {
 * Submit materials_form
 */
 function js_list_materials_submit($form, &$form_state) {
-        $estado = 'FALSE';
-	$array_field_nombres = $form_state['values']['nombre_field_array'];
-	$total = 0;
-	foreach ($array_field_nombres as $field_nombre) {
-		$field_nombre = str_replace(" ", "_", $field_nombre);
-                $field_nombre = str_replace(".", "_", $field_nombre);
-		$precio = $form_state['input']['field_precio_' . $field_nombre];
-		$cantidad = $form_state['input']['field_cantidad_' . $field_nombre];
-		$multi = $precio * $cantidad;
-		$total = $total + $multi;
-	}
-	js_create_insert_sql_form($form, $form_state, $array_field_nombres, $estado);
+    dpm("hola1");
+//        $estado = 'FALSE';
+//	$array_field_nombres = $form_state['values']['nombre_field_array'];
+//	$total = 0;
+//	foreach ($array_field_nombres as $field_nombre) {
+//		$field_nombre = str_replace(" ", "_", $field_nombre);
+//                $field_nombre = str_replace(".", "_", $field_nombre);
+//		$precio = $form_state['input']['field_precio_' . $field_nombre];
+//		$cantidad = $form_state['input']['field_cantidad_' . $field_nombre];
+//		$multi = $precio * $cantidad;
+//		$total = $total + $multi;
+//	}
+//	js_create_insert_sql_form($form, $form_state, $array_field_nombres, $estado);
 }
 
 function js_create_insert_sql_form($form, $form_state, $array_field_nombres, $estado) {
