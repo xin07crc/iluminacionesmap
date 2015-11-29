@@ -414,6 +414,7 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres, $es
         }
         //db_query($sql2); 
     }
+    dpm("asddasdasdasda");
     drupal_goto('estado/' . $table_name);
     return;
 }
