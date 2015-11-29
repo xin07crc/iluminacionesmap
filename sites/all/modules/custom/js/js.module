@@ -271,16 +271,16 @@ function js_list_materials($form, &$form_state) {
                         $form[$parent_name] = array(
                             '#type' => 'fieldset',
                             '#title' => $parent_name,
-                            '#collapsible' => FALSE,
-                            '#collapsed' => FALSE,
+                            '#collapsible' => TRUE,
+                            '#collapsed' => TRUE,
 			);
                     }
                     if (($id - $taxonomy->description) == 1) {
                         $form[$parent_name][$childen_name] = array(
                         	'#type' => 'fieldset',
                         	'#title' => $childen_name,
-                        	'#collapsible' => FALSE,
-                        	'#collapsed' => FALSE,
+                        	'#collapsible' => TRUE,
+                        	'#collapsed' => TRUE,
                         );                
                     }         
 		}
@@ -391,10 +391,9 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres, $es
     $table_name = 'presupuesto_' . $form_state['input']['nombre'] . '_' . $form_state['input']['fecha'] . '';
     $sql = "insert into aux_presupuesto_tables (nombre, correo, estado) values ('$table_name', '$mail', '$estado')";
     db_query($sql);
-    $sql2 = 'create table ' . $table_name . ' (id int(5) primary key, material varchar(30), imagen varchar(30), cantidad int(5), precio int(5), taxonomia int(5))';
+    $sql2 = 'create table ' . $table_name . ' (id int(5), material varchar(100), imagen varchar(30), cantidad int(5), precio int(5), taxonomia int(5))';
     db_query($sql2);
     $total = 0;
-    dpm($form_state['values']);
     foreach ($array_field_nombres as $field_nombre) {
     	$field_nombre = str_replace(" ", "_", $field_nombre);
         $field_nombre = str_replace(".", "_", $field_nombre);
