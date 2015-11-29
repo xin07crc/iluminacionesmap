@@ -372,6 +372,7 @@ function js_list_materials($form, &$form_state) {
 * Submit materials_form
 */
 function js_list_materials_submit($form, &$form_state) {
+    sleep(5);
     dpm("hola1");
 //        $estado = 'FALSE';
 //	$array_field_nombres = $form_state['values']['nombre_field_array'];
