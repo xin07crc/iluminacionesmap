@@ -403,10 +403,14 @@ function js_create_insert_sql_form($form, $form_state, $array_field_nombres, $es
         $tid = $form_state['input']['field_tid_' . $field_nombre];
         if(isset($form_state['values']['imagenes_array'][$field_nombre])) {
             $imagen = $form_state['values']['imagenes_array'][$field_nombre];
-            $sql2 = "insert into {" . $table_name . "}  (id, material, imagen, cantidad, precio, taxonomia) values ($id, '$field_nombre', '$imagen', $cantidad, $precio, $tid)";
+            if($cantidad > 0) {
+                $sql2 = "insert into {" . $table_name . "}  (id, material, imagen, cantidad, precio, taxonomia) values ($id, '$field_nombre', '$imagen', $cantidad, $precio, $tid)";
+            }
         }
         else {
-            $sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
+            if($cantidad > 0) {
+                $sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
+            }
         }
         db_query($sql2); 
     }
