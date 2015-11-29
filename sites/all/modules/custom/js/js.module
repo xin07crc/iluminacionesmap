@@ -387,36 +387,37 @@ function js_list_materials_submit($form, &$form_state) {
 }
 
 function js_create_insert_sql_form($form, $form_state, $array_field_nombres, $estado) {
-    $mail = $form_state['input']['mail'];
-    $table_name = 'presupuesto_' . $form_state['input']['nombre'] . '_' . $form_state['input']['fecha'] . '';
-    $sql = "insert into aux_presupuesto_tables (nombre, correo, estado) values ('$table_name', '$mail', '$estado')";
-    db_query($sql);
-    $sql2 = 'create table ' . $table_name . ' (id int(5), material varchar(100), imagen varchar(30), cantidad int(5), precio int(5), taxonomia int(5))';
-    db_query($sql2);
-    $total = 0;
-    foreach ($array_field_nombres as $field_nombre) {
-    	$field_nombre = str_replace(" ", "_", $field_nombre);
-        $field_nombre = str_replace(".", "_", $field_nombre);
-        $precio = $form_state['input']['field_precio_' . $field_nombre];
-	$cantidad = $form_state['input']['field_cantidad_' . $field_nombre];
-        $id = $form_state['input']['field_id_' . $field_nombre];
-        $tid = $form_state['input']['field_tid_' . $field_nombre];
-        if(isset($form_state['values']['imagenes_array'][$field_nombre])) {
-            $imagen = $form_state['values']['imagenes_array'][$field_nombre];
-            if($cantidad > 0) {
-                //$sql2 = "insert into {" . $table_name . "}  (id, material, imagen, cantidad, precio, taxonomia) values ($id, '$field_nombre', '$imagen', $cantidad, $precio, $tid)";
-            }
-        }
-        else {
-            if($cantidad > 0) {
-                //$sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
-            }
-        }
-        //db_query($sql2); 
-    }
-    dpm("asddasdasdasda");
-    drupal_goto('estado/' . $table_name);
-    return;
+    dpm('hola');
+//    $mail = $form_state['input']['mail'];
+//    $table_name = 'presupuesto_' . $form_state['input']['nombre'] . '_' . $form_state['input']['fecha'] . '';
+//    $sql = "insert into aux_presupuesto_tables (nombre, correo, estado) values ('$table_name', '$mail', '$estado')";
+//    db_query($sql);
+//    $sql2 = 'create table ' . $table_name . ' (id int(5), material varchar(100), imagen varchar(30), cantidad int(5), precio int(5), taxonomia int(5))';
+//    db_query($sql2);
+//    $total = 0;
+//    foreach ($array_field_nombres as $field_nombre) {
+//    	$field_nombre = str_replace(" ", "_", $field_nombre);
+//        $field_nombre = str_replace(".", "_", $field_nombre);
+//        $precio = $form_state['input']['field_precio_' . $field_nombre];
+//	$cantidad = $form_state['input']['field_cantidad_' . $field_nombre];
+//        $id = $form_state['input']['field_id_' . $field_nombre];
+//        $tid = $form_state['input']['field_tid_' . $field_nombre];
+//        if(isset($form_state['values']['imagenes_array'][$field_nombre])) {
+//            $imagen = $form_state['values']['imagenes_array'][$field_nombre];
+//            if($cantidad > 0) {
+//                //$sql2 = "insert into {" . $table_name . "}  (id, material, imagen, cantidad, precio, taxonomia) values ($id, '$field_nombre', '$imagen', $cantidad, $precio, $tid)";
+//            }
+//        }
+//        else {
+//            if($cantidad > 0) {
+//                //$sql2 = "insert into {" . $table_name . "}  (id, material, cantidad, precio, taxonomia) values ($id, '$field_nombre', $cantidad, $precio, $tid)";
+//            }
+//        }
+//        //db_query($sql2); 
+//    }
+//    dpm("asddasdasdasda");
+//    drupal_goto('estado/' . $table_name);
+//    return;
 }
 
 
