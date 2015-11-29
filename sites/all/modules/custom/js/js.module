@@ -242,112 +242,112 @@ function js_list_materials($form, &$form_state) {
             '#type' => 'textfield',
             '#title' => t('Correo'),
         );    
-	foreach ($nodes as $node) {
-		$vid = $node->vid;
-		$nombre = $node->title;
-		$id = $node->field_mat_id['und'][0]['value'];
-		$precio = $node->field_mat_precio['und'][0]['value'];
-		$tid = $node->field_mat_clasificacion['und'][0]['tid'];
-                /*TODO: CREAR FUNCION*/
-                
-                
-                
-		$taxonomy = taxonomy_term_load($tid);
-		$taxonomy_parents =  taxonomy_get_parents($tid);
-                $array_children_parent = array();
-                
-                
-                foreach ($taxonomy_parents as $parent) {
-                    $children_parent = taxonomy_get_children($parent->tid);
-                    foreach ($children_parent as $cp) {
-                        array_push($array_children_parent, $cp->description);
-                    }
-                }
-                foreach ($taxonomy_parents as $parents) {
-                    $parent_name = $parents->name;
-                    $childen_name = $taxonomy->name;
-                    $childen_name = str_replace(" ", "_", $childen_name);
-                    if ($taxonomy->description == $array_children_parent[0] && ($id - $taxonomy->description) == 1) {
-                        $form[$parent_name] = array(
-                            '#type' => 'fieldset',
-                            '#title' => $parent_name,
-                            '#collapsible' => TRUE,
-                            '#collapsed' => TRUE,
-			);
-                    }
-                    if (($id - $taxonomy->description) == 1) {
-                        $form[$parent_name][$childen_name] = array(
-                        	'#type' => 'fieldset',
-                        	'#title' => $childen_name,
-                        	'#collapsible' => TRUE,
-                        	'#collapsed' => TRUE,
-                        );                
-                    }         
-		}
-                $field_nombre = 'field_nombre_' . $nombre;
-                $field_cantidad = 'field_cantidad_' . $nombre;
-                $field_id = 'field_id_' . $nombre;
-                $field_precio = 'field_precio_' . $nombre;
-                $field_tid = 'field_tid_' . $nombre;
-                $field_imagen = 'field_imagen_' . $nombre;
-                if(isset($node->field_mat_imagen['und'][0]['filename'])) {
-                    $imagen = $node->field_mat_imagen['und'][0]['filename'];
-                    $image_options = array(
-                        'path' => 'sites/default/files/' . $node->field_mat_imagen['und'][0]['filename'], 
-                        'alt' => 'Test alt',
-                        'title' => 'Fressnel',
-                        'width' => '100%',
-                        'attributes' => array('class' => 'field-image'),
-                    );
-                    $image = theme('image', $image_options);
-                    $form[$parent_name][$childen_name][$field_imagen] = array(
-                        '#prefix' => '<div class= "divcontainerfieldsform">',
-                        '#markup' => $image,
-                    );
-                    $form[$parent_name][$childen_name][$field_nombre] = array(
-                        '#type' => 'item',
-                        '#title' => $nombre,
-                    );
-                    $nombre = str_replace(" ", "_", $nombre);
-                    $array_images[$nombre] = $imagen;
-                    $nombre = str_replace("_", " ", $nombre);
-                }
-                else {
-                    $form[$parent_name][$childen_name][$field_nombre] = array(
-                        '#prefix' => '<div class= "divcontainerfieldsform">',
-                        '#type' => 'item',
-                        '#title' => $nombre,
-                    );
-                }
-                
-
-		$form[$parent_name][$childen_name][$field_cantidad] = array(
-    		'#attributes' => array(
-        		'data-type' => 'number',
-    		),			
-			'#type' => 'textfield',
-			'#title' => t('cantidad'),
-			'#default_value' => '0',
-		);
-
-		$form[$parent_name][$childen_name][$field_id] = array(
-			'#type' => 'hidden',
-			'#title' => $id,
-                        '#value' => $id,
-		);		
-		$form[$parent_name][$childen_name][$field_tid] = array(
-			'#type' => 'hidden',
-			'#title' => $tid,
-                        '#value' => $tid,
-		);                
-		$form[$parent_name][$childen_name][$field_precio] = array(
-			'#type' => 'hidden',
-			'#title' => $precio,
-			'#value' => $precio,
-			'#suffix' => '</div>',
-		);
-		array_push($array_field_nombres, $nombre);
-	}     
+//	foreach ($nodes as $node) {
+//		$vid = $node->vid;
+//		$nombre = $node->title;
+//		$id = $node->field_mat_id['und'][0]['value'];
+//		$precio = $node->field_mat_precio['und'][0]['value'];
+//		$tid = $node->field_mat_clasificacion['und'][0]['tid'];
+//                /*TODO: CREAR FUNCION*/
+//                
+//                
+//                
+//		$taxonomy = taxonomy_term_load($tid);
+//		$taxonomy_parents =  taxonomy_get_parents($tid);
+//                $array_children_parent = array();
+//                
+//                
+//                foreach ($taxonomy_parents as $parent) {
+//                    $children_parent = taxonomy_get_children($parent->tid);
+//                    foreach ($children_parent as $cp) {
+//                        array_push($array_children_parent, $cp->description);
+//                    }
+//                }
+//                foreach ($taxonomy_parents as $parents) {
+//                    $parent_name = $parents->name;
+//                    $childen_name = $taxonomy->name;
+//                    $childen_name = str_replace(" ", "_", $childen_name);
+//                    if ($taxonomy->description == $array_children_parent[0] && ($id - $taxonomy->description) == 1) {
+//                        $form[$parent_name] = array(
+//                            '#type' => 'fieldset',
+//                            '#title' => $parent_name,
+//                            '#collapsible' => TRUE,
+//                            '#collapsed' => TRUE,
+//			);
+//                    }
+//                    if (($id - $taxonomy->description) == 1) {
+//                        $form[$parent_name][$childen_name] = array(
+//                        	'#type' => 'fieldset',
+//                        	'#title' => $childen_name,
+//                        	'#collapsible' => TRUE,
+//                        	'#collapsed' => TRUE,
+//                        );                
+//                    }         
+//		}
+//                $field_nombre = 'field_nombre_' . $nombre;
+//                $field_cantidad = 'field_cantidad_' . $nombre;
+//                $field_id = 'field_id_' . $nombre;
+//                $field_precio = 'field_precio_' . $nombre;
+//                $field_tid = 'field_tid_' . $nombre;
+//                $field_imagen = 'field_imagen_' . $nombre;
+//                if(isset($node->field_mat_imagen['und'][0]['filename'])) {
+//                    $imagen = $node->field_mat_imagen['und'][0]['filename'];
+//                    $image_options = array(
+//                        'path' => 'sites/default/files/' . $node->field_mat_imagen['und'][0]['filename'], 
+//                        'alt' => 'Test alt',
+//                        'title' => 'Fressnel',
+//                        'width' => '100%',
+//                        'attributes' => array('class' => 'field-image'),
+//                    );
+//                    $image = theme('image', $image_options);
+//                    $form[$parent_name][$childen_name][$field_imagen] = array(
+//                        '#prefix' => '<div class= "divcontainerfieldsform">',
+//                        '#markup' => $image,
+//                    );
+//                    $form[$parent_name][$childen_name][$field_nombre] = array(
+//                        '#type' => 'item',
+//                        '#title' => $nombre,
+//                    );
+//                    $nombre = str_replace(" ", "_", $nombre);
+//                    $array_images[$nombre] = $imagen;
+//                    $nombre = str_replace("_", " ", $nombre);
+//                }
+//                else {
+//                    $form[$parent_name][$childen_name][$field_nombre] = array(
+//                        '#prefix' => '<div class= "divcontainerfieldsform">',
+//                        '#type' => 'item',
+//                        '#title' => $nombre,
+//                    );
+//                }
+//                
+//
+//		$form[$parent_name][$childen_name][$field_cantidad] = array(
+//    		'#attributes' => array(
+//        		'data-type' => 'number',
+//    		),			
+//			'#type' => 'textfield',
+//			'#title' => t('cantidad'),
+//			'#default_value' => '0',
+//		);
+//
+//		$form[$parent_name][$childen_name][$field_id] = array(
+//			'#type' => 'hidden',
+//			'#title' => $id,
+//                        '#value' => $id,
+//		);		
+//		$form[$parent_name][$childen_name][$field_tid] = array(
+//			'#type' => 'hidden',
+//			'#title' => $tid,
+//                        '#value' => $tid,
+//		);                
+//		$form[$parent_name][$childen_name][$field_precio] = array(
+//			'#type' => 'hidden',
+//			'#title' => $precio,
+//			'#value' => $precio,
+//			'#suffix' => '</div>',
+//		);
+//		array_push($array_field_nombres, $nombre);
+//	}     
         $form['fecha'] = array(
             '#type' => 'hidden',
             '#title' => 'fecha',
